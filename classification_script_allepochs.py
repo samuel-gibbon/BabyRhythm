@@ -1,3 +1,8 @@
+"""
+This script will load data and run CNN. You'll first need to put the data in seperate folders, and rename lines 33, 38, 46, and 51 accordingly.
+Built in 2019, so uses Tensorflow 1.0.
+"""
+
 import os
 import numpy as np
 import scipy
