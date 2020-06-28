@@ -1,6 +1,9 @@
 """
-This script will load data and run CNN. You'll first need to put the data in seperate folders, and rename lines 33, 38, 46, and 51 accordingly.
-Built in 2019, so uses Tensorflow 1.0.
+This script will load the data, run the CNN, and save the results. 
+You'll first need to put the data into seperate folders, and rename filepath lines accordingly.
+
+Before running you'll need to install keras and tensorflow (e.g. on unix - pip install keras, pip install tensorflow). 
+NB: This was built in 2019, so uses Tensorflow 1.0.
 """
 
 import os
@@ -10,25 +13,21 @@ from scipy import io
 import keras
 import tensorflow as tf
 from tensorflow.keras import layers
-from keras.layers import LeakyReLU
-from keras.optimizers import SGD
-from keras.layers import BatchNormalization
 from keras.models import load_model
 from keras import models
 from keras import layers
 from keras import regularizers
 from keras.layers import Dense, Dropout, Flatten
-from keras.layers import Conv2D, MaxPooling2D, AveragePooling2D, BatchNormalization
+from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import InputLayer
-import matplotlib.pyplot as plt
 from sklearn.model_selection import StratifiedKFold
 from sklearn.utils import class_weight
 import csv
 
 results = []
-seed = 7
-
 cw = []
+
+seed = 7
 
 drumList = os.listdir('C:\\Users\\User\\Desktop\\epoched_v2\\bad_epochs_included\\drum')
 drumData = []
@@ -93,13 +92,11 @@ for i in range(len(EEG)):
         cvscores.append(scores[1] * 100)
         LABEL1 = np.argmax(LABEL1, axis=1)
     results.append((np.mean(cvscores), np.std(cvscores)))
-   
+
 with open('classification_results_allepochs.csv','w+') as out:
     csv_out=csv.writer(out)
     for row in results:
         csv_out.writerow(row)
-
-model.save("classification_model_allepochs.h5")
 
 with open("classification_subjects_allepochs.txt", "w+") as subjects:
     for item in drumList:
